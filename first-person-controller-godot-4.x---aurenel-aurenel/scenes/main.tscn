@@ -1,0 +1,77 @@
+[gd_scene format=3 uid="uid://dr5ybdpv1gdes"]
+
+[ext_resource type="Texture2D" uid="uid://dx58so5btbkpv" path="res://textures/texture_07.png" id="1_o5qli"]
+[ext_resource type="Shader" uid="uid://c2glnymvvk3xs" path="res://textures/main.gdshader" id="1_sugp2"]
+[ext_resource type="PackedScene" uid="uid://cf6hh2an6ns6g" path="res://textures/player.tscn" id="2_0wfyh"]
+[ext_resource type="Texture2D" uid="uid://bdggk5fgt3r3i" path="res://textures/Map_PNG'S/Sky_maps/Back.png" id="2_85g3d"]
+[ext_resource type="Texture2D" uid="uid://dsjgns36eciy8" path="res://textures/Map_PNG'S/Using_sky/Down.png" id="3_choun"]
+[ext_resource type="Texture2D" uid="uid://bdgj530dnjn5h" path="res://textures/Map_PNG'S/Using_sky/Front.png" id="4_ya4ey"]
+[ext_resource type="Texture2D" uid="uid://bwl7eqaef07cc" path="res://textures/Map_PNG'S/Using_sky/Left.png" id="5_eb6dy"]
+[ext_resource type="Texture2D" uid="uid://bcmj6m5cafr4e" path="res://textures/Map_PNG'S/Using_sky/Right.png" id="6_trceg"]
+[ext_resource type="Texture2D" uid="uid://cep57xmwftknm" path="res://textures/Map_PNG'S/Using_sky/UP.png" id="7_a8y0u"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_qlg0r"]
+shader = ExtResource("1_sugp2")
+shader_parameter/front = ExtResource("4_ya4ey")
+shader_parameter/back = ExtResource("2_85g3d")
+shader_parameter/left = ExtResource("5_eb6dy")
+shader_parameter/right = ExtResource("6_trceg")
+shader_parameter/top = ExtResource("7_a8y0u")
+shader_parameter/bottom = ExtResource("3_choun")
+
+[sub_resource type="Sky" id="Sky_sugp2"]
+sky_material = SubResource("ShaderMaterial_qlg0r")
+
+[sub_resource type="Environment" id="Environment_jyhfs"]
+background_mode = 2
+sky = SubResource("Sky_sugp2")
+
+[sub_resource type="NavigationMesh" id="NavigationMesh_duchk"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_choun"]
+albedo_texture = ExtResource("1_o5qli")
+uv1_triplanar = true
+uv1_world_triplanar = true
+
+[sub_resource type="BoxMesh" id="BoxMesh_llvwq"]
+lightmap_size_hint = Vector2i(14, 21)
+material = SubResource("StandardMaterial3D_choun")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_85g3d"]
+
+[node name="Main" type="Node3D" unique_id=526248935]
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1904345255]
+transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545, -0.50000006, 0.75, -0.43301266, 0, 0, 0)
+shadow_enabled = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=513788692]
+environment = SubResource("Environment_jyhfs")
+
+[node name="world floor" type="StaticBody3D" parent="." unique_id=11035019]
+
+[node name="NavigationRegion3D" type="NavigationRegion3D" parent="world floor" unique_id=239614945]
+transform = Transform3D(40, 0, 0, 0, 40, 0, 0, 0, 40, 0, -19.954813, 0)
+navigation_mesh = SubResource("NavigationMesh_duchk")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="world floor" unique_id=665808126]
+transform = Transform3D(40, 0, 0, 0, 40, 0, 0, 0, 40, -0.0470829, -19.954813, 0.0063972473)
+mesh = SubResource("BoxMesh_llvwq")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="world floor" unique_id=350597867]
+transform = Transform3D(40, 0, 0, 0, 40, 0, 0, 0, 40, 0, -19.954813, 0)
+shape = SubResource("BoxShape3D_85g3d")
+
+[node name="player" parent="." unique_id=471364699 instance=ExtResource("2_0wfyh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.022012234, 1, 0.18857574)
+
+[node name="CSGCombiner3D" type="CSGCombiner3D" parent="." unique_id=498439669]
+use_collision = true
+
+[node name="CSGBox3D" type="CSGBox3D" parent="CSGCombiner3D" unique_id=1241907672]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.354295, 1.5981014, -2.918698)
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="CSGCombiner3D" unique_id=494527176]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.2501597, 0.5368948, 0)
+
+[node name="NavigationRegion3D" type="NavigationRegion3D" parent="." unique_id=832493972]
